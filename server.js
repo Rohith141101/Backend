@@ -1,0 +1,13 @@
+const express=require('express')
+const userHandler = require('./userHandler')
+const connectDB = require('./db')
+const dotenv=require('dotenv').config()
+const PORT=process.env.PORT
+const app=express()
+connectDB()
+app.use(express.json())
+app.use(express.urlencoded({extended:false}))
+app.use(userHandler)
+app.use("/api/users",require('./userRoute'))
+app.get("/",(req,res)=>res.send({message:"Hi from server.js"}))
+app.listen(PORT,()=>console.log(`port ${PORT} is rendered`))
